@@ -67,7 +67,7 @@ Key points of `decision_step()`:
 - Rover speed was set low at 0.7m/s to help with rock_sample finding. The acceleration was set high at 0.4 m/s/s to help the rover from getting stuck
 - Obstacle avoidance was accomplished by setting a minimum for the navigable area.  
 - When a rock was detected, the rover would use the angle in the camera to move towards it at low velocity (stop and start)
-- After a rock was picked-up, the rover was instructed to go backwards to help it regain a suitable position
+- After a rock was picked-up, the rover was instructed to go backwards to help it regain a suitable position in the correct direction
 - Some routines for getting the rover un-stuck were implemented. These involved temporarily increasing the acceleration, going backward, and rotating the rover. They were developed by trial-error. It could also get stuck turning large circles in open-field regions. An attempt has been made to break this looping.
 
 
@@ -84,14 +84,14 @@ Here I'll talk about the approach I took, what techniques I used, what worked an
 
 The approach was to:
 - Follow the wall to ensure the rover would complete the course efficiently (use quantile of navigable angles when steering)
-- Use image semgmentation to find the rock_samples, navigable_terrain
+- Use image segmentation to find the rock_samples, navigable_terrain
 - If a rock is detected, try to pick it up even if it is on opposite wall (left-side)
 - Have low velocity with large acceleration (seemed to work best)
 - Not use images when the rover is pitching or rolling to much when constructing the worldmap 
 
 Further improvements:
 - Need to identify hazards better. Maybe use pattern recognition(template matching, edge shape etc). Maybe quantify left,right, and center area/horizon
-- Even though there has been an attempt to prevent the rover from re-tracing its path, it is far from perfect. I would be better to store the rover positions
+- Even though there has been an attempt to prevent the rover from re-tracing its path, it is far from perfect. It would be better to store the rover positions
 - Not all of the stuck-rover possibilities have been tested. So it still may get stuck. It is probably better to be more cautious and spend more effort on developing  hazard detection.
 - Double-check the robustness of the segmentation on many images
 - Need to explore deep learning methods 
